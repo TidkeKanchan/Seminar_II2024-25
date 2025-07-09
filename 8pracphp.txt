@@ -1,0 +1,32 @@
+
+<?php
+session_start();
+
+if (isset($_POST['userid']) && isset($_POST['password'])) {
+    $uid = $_POST['userid'];
+    $pw = $_POST['password'];
+
+    if ($uid == 'ben' && $pw == 'ben23') {
+        $_SESSION['sid'] = session_id();
+        echo "Logged in successfully";
+    } else {
+        echo "Invalid username or password";
+    }
+}
+
+if (isset($_SESSION['sid'])) {
+    // User is logged in, show logout option
+    echo "<a href='?logout=1'>Logout</a>";
+    if (isset($_GET['logout']) && $_GET['logout'] == 1) {
+        session_destroy();
+        echo "Logged out successfully";
+    }
+} else {
+    // User is not logged in, show login form
+    echo "<form method='post'>
+        <input type='text' name='userid' placeholder='User ID'>
+        <input type='password' name='password' placeholder='Password'>
+        <input type='submit' value='Login'>
+    </form>";
+}?>
+
